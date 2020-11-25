@@ -6,83 +6,91 @@ require_once '../includes/dbOperations.php';
 $response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (
-		isset($_POST['firstname']) and
-		isset($_POST['lastname']) and
-		isset($_POST['birthday']) and
-		isset($_POST['gender']) and
-		isset($_POST['username']) and
-		isset($_POST['email']) and
-		isset($_POST['contact']) and
-		isset($_POST['password'])
-	) {
+    if (
+        isset($_POST['first_name']) and
+        isset($_POST['last_name']) and
+        isset($_POST['email']) and
+        isset($_POST['contact']) and
+        isset($_POST['username']) and
+        isset($_POST['password']) and
+        isset($_POST['account_type'])
+    ) {
 
-		// we can operate the data further
-		$db = new DbOperations();
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $contact = $_POST['contact'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $user_type = $_POST['account_type'];
+        $status;
 
-		$result = $db->createUser(
-			$_POST['firstname'],
-			$_POST['lastname'],
-			$_POST['birthday'],
-			$_POST['gender'],
-			$_POST['username'],
-			$_POST['email'],
-			$_POST['contact'],
-			$_POST['password']
-		);
+        if ($user_type == 'PET_OWNER') {
+            $status = 'ACTIVE';
+        } else {
+            $status = 'PENDING';
+        }
 
-		if ($result == 1) {
+        // we can operate the data further
+        $db = new DbOperations();
 
-			// success
+        $result = $db->createUser(
+            $first_name, $last_name, $email, $contact, $username, $password, $user_type, $status
+        );
 
-			$user = $db->getUserByUsername($_POST['username']);
+        if ($result == 1) {
 
-			$response['error'] = false;
-			$response['message'] = "User registered successfully";
+            // success
+            $user = $db->getUserByUsername($username);
 
-			$_SESSION['User'] = $_POST['username'];
-			$_SESSION['FirstName'] = $_POST['firstname'];
-			$_SESSION['LastName'] = $_POST['lastname'];
-			$_SESSION['Email'] = $_POST['email'];
-			$_SESSION['Id'] = $user['id'];
-			$_SESSION['UserType'] = $user['user_type'];
+            if ($user['user_type'] == 'CLINIC') {
 
-			header("location:../user/index.php");
-		} elseif ($result == 2) {
+                $response['error'] = false;
+                $response['message'] = "User registered successfully";
+                $_SESSION['missing'] = "You have succesfully registered and is pending approval. Please check back later.";
 
-			// some error
+            } else {
 
-			$_SESSION['error'] = "Something went wrong, please try again";
+                $response['error'] = false;
+                $response['message'] = "User registered successfully";
+                $_SESSION['success'] = "You have succesfully. Please log in.";
 
-			$response['error'] = true;
-			$response['message'] = "Some error occured, please try again";
+            }
 
-			header("location:../register/index.php");
-		} elseif ($result == 0) {
+            header("location:../login.php");
 
-			// user exists
+        } elseif ($result == 2) {
 
-			$_SESSION['error'] = "It seems you are already registered, please choose a different email and username.";
+            // some error
+            $response['error'] = true;
+            $response['message'] = "Some error occured, please try again";
+            $_SESSION['error'] = "Something went wrong, please try again";
+            header("location:../index.php");
 
-			$response['error'] = true;
-			$response['message'] = "It seems you are already registered, please choose a different email and username";
+        } elseif ($result == 0) {
 
-			header("location:../register/index.php");
-		}
-	} else {
-		// missing fields
+            // user exists
+            $response['error'] = true;
+            $response['message'] = "It seems you are already registered, please choose a different email and username";
+            $_SESSION['error'] = "It seems you are already registered, please choose a different email and username.";
+            header("location:../index.php");
 
-		$_SESSION['missing'] = "Required fields are missing.";
+        }
+    } else {
 
-		$response['error'] = true;
-		$response['message'] = "Required fields are missing";
+        // missing fields
+        $response['error'] = true;
+        $response['message'] = "Required fields are missing";
+        $_SESSION['missing'] = "Required fields are missing.";
+        header("location:../index.php");
 
-		header("location:../register/index.php");
-	}
+    }
 } else {
-	// wrong method
-	$response['error'] = true;
-	$response['message'] = "Invalid Request";
+
+    // wrong method
+    $response['error'] = true;
+    $response['message'] = "Invalid Request";
+
 }
 
 // json output
