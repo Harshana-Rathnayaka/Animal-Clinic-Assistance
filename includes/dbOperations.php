@@ -244,7 +244,7 @@ class DbOperations
     // retrieving users table
     public function getUsers()
     {
-        $stmt = $this->con->prepare("SELECT * FROM `users` INNER JOIN `departments` ON departments.department_id = users.department_id WHERE `user_type` != 0");
+        $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `user_type` != 'ADMIN'");
         $stmt->execute();
         return $stmt->get_result();
     }

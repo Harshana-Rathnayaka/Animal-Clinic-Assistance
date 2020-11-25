@@ -114,49 +114,69 @@ unset($_SESSION['missing']);
 
 
                         <div class="table-responsive">
-                            <table id="allUsersTable" class="table table-striped table-hover table-dark">
+                            <table id="allUsersTable" class="table table-striped table-hover table-sm">
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
                                         <th>Username</th>
-                                        <th>Make</th>
-                                        <th>Model</th>
-                                        <th>Quantity</th>
-                                        <th>Timestamp</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-include '../api/getAllPendingOrders.php';
-if ($result) {
-    while ($row = mysqli_fetch_array($result)) {
-        ?>
+include '../api/getLists.php';
+while ($row = mysqli_fetch_array($users_admin)):
+?>
                                             <tr>
-                                                <td><?php echo $row['order_id']; ?></td>
+                                                <td><?php echo $row['user_id']; ?></td>
+                                                <td><?php echo $row['first_name']; ?></td>
+                                                <td><?php echo $row['last_name']; ?></td>
                                                 <td><?php echo $row['username']; ?></td>
-                                                <td><?php echo $row['make']; ?></td>
-                                                <td><?php echo $row['model']; ?></td>
-                                                <td><?php echo $row['quantity']; ?></td>
-                                                <td><?php echo $row['timestamp']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['contact']; ?></td>
 
                                                 <?php
-$order_status = $row['order_status'];
-        if ($order_status == 0) {
-            ?>
-                                                    <td class="text-warning"><strong>Pending</strong></td>
+if ($row['user_type'] == 'CLINIC'):
+?>
+                                                <td class="badge badge-info "><?php echo $row['user_type']; ?></td>
                                                 <?php
-}
-        ?>
+else:
+?>
+                                                <td class="badge badge-primary"><?php echo $row['user_type']; ?></td>
+                                                <?php
+endif;
+?>
+
+
+                                                <?php
+if ($row['status'] == 'PENDING'): ?>
+                                                <td class="text-warning"><?php echo $row['status']; ?></td>
+                                                <?php
+elseif ($row['status'] == 'SUSPENDED'): ?>
+                                                    <td class="text-danger"><?php echo $row['status']; ?></td>
+                                                <?php
+else:
+?>
+                                                    <td class="text-success"><?php echo $row['status']; ?></td>
+                                                    <?php
+endif;
+?>
+
+
                                                 <td>
                                                     <form action="../api/updateOrderStatus.php" method="POST">
-                                                        <input type="hidden" name="orderId" value="<?php echo $row['order_id']; ?>" <div class="form-group">
-                                                        <div>
-                                                            <select class="form-control col-10" name="process" required>
-                                                                <option value="3">Update order</option>
-                                                                <option value="1">Confirm</option>
-                                                                <option value="2">Refund</option>
+                                                        <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" >
+                                                        <div class="form-group">
+                                                            <select class="form-control col-10" name="process" required> Select a value
+                                                                <option selected disabled>Update User</option>
+                                                                <option value="ACTIVE">Activate</option>
+                                                                <option value="SUSPEND">Suspend</option>
                                                             </select>
                                                         </div>
                                                         <br>
@@ -165,23 +185,18 @@ $order_status = $row['order_status'];
                                                 </td>
 
                                             </tr>
-                                    <?php
-}
-}
+
+                                            <?php
+endwhile;
 ?>
+
                                 </tbody>
                             </table>
                         </div>
                     </main>
 
                     <div class="ml-auto mr-auto text-center py-5 mt-5">
-                        <footer class="footer">
-                            <div class="footer__block block no-margin-bottom">
-                                <div class="container-fluid text-center">
-                                    <p class="no-margin-bottom">2020 &copy; Dreeko Corporations | All Rights Reserved. <a title="www.github.com/Harshana-Rathnayaka" target="_blank" href="https://github.com/Harshana-Rathnayaka" class="icon-repo-forked"> Repository &rightarrowtail;</a></p>
-                                </div>
-                            </div>
-                        </footer>
+                    <?php include 'footer.php';?>
                     </div>
 
                 </div>
