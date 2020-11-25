@@ -249,18 +249,10 @@ class DbOperations
         return $stmt->get_result();
     }
 
-    // retrieving orders table
-    public function getOrders()
+    // retrieving users table
+    public function getPendingUsers()
     {
-        $stmt = $this->con->prepare("SELECT * FROM `orders`");
-        $stmt->execute();
-        return $stmt->get_result();
-    }
-
-    // retrieving emails table
-    public function getEmails()
-    {
-        $stmt = $this->con->prepare("SELECT * FROM `senior_managers`");
+        $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `user_type` = 'CLINIC' AND `status` = 'PENDING'");
         $stmt->execute();
         return $stmt->get_result();
     }

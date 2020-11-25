@@ -114,7 +114,7 @@ unset($_SESSION['missing']);
 
 
                         <div class="table-responsive">
-                            <table id="allUsersTable" class="table table-striped table-hover table-sm">
+                            <table id="allUsersTable" class="table table-striped table-dark table-hover table-sm">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -131,7 +131,7 @@ unset($_SESSION['missing']);
                                 <tbody>
                                     <?php
 include '../api/getLists.php';
-while ($row = mysqli_fetch_array($users_admin)):
+while ($row = mysqli_fetch_array($all_users_admin)):
 ?>
                                             <tr>
                                                 <td><?php echo $row['user_id']; ?></td>
@@ -144,11 +144,11 @@ while ($row = mysqli_fetch_array($users_admin)):
                                                 <?php
 if ($row['user_type'] == 'CLINIC'):
 ?>
-                                                <td class="badge badge-info "><?php echo $row['user_type']; ?></td>
+                                                <td class="text-info "><?php echo $row['user_type']; ?></td>
                                                 <?php
 else:
 ?>
-                                                <td class="badge badge-primary"><?php echo $row['user_type']; ?></td>
+                                                <td class="text-primary"><?php echo $row['user_type']; ?></td>
                                                 <?php
 endif;
 ?>
@@ -156,14 +156,14 @@ endif;
 
                                                 <?php
 if ($row['status'] == 'PENDING'): ?>
-                                                <td class="text-warning"><?php echo $row['status']; ?></td>
+                                                <td class="badge badge-warning"><?php echo $row['status']; ?></td>
                                                 <?php
 elseif ($row['status'] == 'SUSPENDED'): ?>
-                                                    <td class="text-danger"><?php echo $row['status']; ?></td>
+                                                    <td class="badge badge-danger"><?php echo $row['status']; ?></td>
                                                 <?php
 else:
 ?>
-                                                    <td class="text-success"><?php echo $row['status']; ?></td>
+                                                    <td class="badge badge-success"><?php echo $row['status']; ?></td>
                                                     <?php
 endif;
 ?>
@@ -173,7 +173,7 @@ endif;
                                                     <form action="../api/updateOrderStatus.php" method="POST">
                                                         <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" >
                                                         <div class="form-group">
-                                                            <select class="form-control col-10" name="process" required> Select a value
+                                                            <select class="form-control col-10" name="process" required>
                                                                 <option selected disabled>Update User</option>
                                                                 <option value="ACTIVE">Activate</option>
                                                                 <option value="SUSPEND">Suspend</option>

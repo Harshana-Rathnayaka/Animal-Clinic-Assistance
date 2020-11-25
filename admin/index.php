@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])) {
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Vehicles</title>
+  <title>Pending Requests</title>
 
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -117,67 +117,53 @@ unset($_SESSION['missing']);
 
 
         <div class="table-responsive">
-          <table id="pendingReqTable" class="table table-striped table-hover table-dark text-center">
+          <table id="pendingReqTable" class="table table-striped table-hover table-sm table-dark text-center">
             <thead>
               <tr>
-                <th width="3%">#</th>
-                <th width="3%">Make</th>
-                <th width="3%">Model</th>
-                <th width="3%">Transmission</th>
-                <th width="3%">Condition</th>
-                <th width="3%">Colour</th>
-                <th>Convertible</th>
-                <th>In Stock</th>
-                <th>Price</th>
-                <th>Action</th>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
 
               </tr>
             </thead>
             <tbody>
+
               <?php
-include '../api/getVehicles.php';
-if ($result) {
-    while ($row = mysqli_fetch_array($result)) {
-        ?>
+include '../api/getLists.php';
+while ($row = mysqli_fetch_array($pending_users_admin)):
+?>
                   <tr>
-                    <td><?php echo $vehicle_id = $row['vehicle_id']; ?></td>
-                    <td><?php echo $row['name']; ?></td>
-                    <td><?php echo $row['model']; ?></td>
-                    <td><?php echo $row['transmission_type']; ?></td>
-                    <td><?php echo $row['vehicle_condition']; ?></td>
-                    <td><?php echo $row['colour']; ?></td>
-                    <td><?php $convertible = $row['convertible'];
-        if ($convertible == "0") {
-            ?>
-                        <span class="text-danger">&times;</span>
-                      <?php
-} elseif ($convertible == "1") {
-            ?>
-                        <span class="text-success">&radic;</span>
-                      <?php
-}
-        ?></td>
-                    <td><?php $in_stock = $row['in_stock'];
-        if ($in_stock == "0") {
-            ?>
-                        <span class="text-danger">&times;</span>
-                      <?php
-} elseif ($in_stock == "1") {
-            ?>
-                        <span class="text-success">&radic;</span>
-                      <?php
-}
-        ?></td>
-                    <td><?php echo $row['price']; ?></td>
-                    <td>
-                      <form action="viewvehicle.php?vehicle_id=<?php echo $vehicle_id; ?>" method="POST">
-                        <button type="submit" name="view" class="btn btn-success btn-sm">View</button>
-                      </form>
-                    </td>
-                  </tr>
-              <?php
-}
-}
+                                                <td><?php echo $row['user_id']; ?></td>
+                                                <td><?php echo $row['first_name']; ?></td>
+                                                <td><?php echo $row['last_name']; ?></td>
+                                                <td><?php echo $row['username']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['contact']; ?></td>
+                                                <td class="badge badge-warning"><?php echo $row['status']; ?></td>
+                                                <td>
+                                                    <form action="../api/updateOrderStatus.php" method="POST">
+                                                        <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" >
+                                                        <div class="form-group">
+                                                            <select class="form-control col-10" name="process" required>
+                                                                <option selected disabled>Update User</option>
+                                                                <option value="ACTIVE">Approve</option>
+                                                                <option value="SUSPEND">Reject</option>
+                                                            </select>
+                                                        </div>
+                                                        <br>
+                                                        <button type="submit" name="btnUpdateOrderStatus" class="btn btn-info">Update</button>
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+
+                                            <?php
+endwhile;
 ?>
 
             </tbody>
