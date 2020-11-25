@@ -18,15 +18,15 @@ class DbOperations
     /* CRUD  -> C -> CREATE */
 
     // addding new user
-    public function createUser($fullname, $username, $email, $pass, $usertype, $department)
+    public function createUser($first_name, $last_name, $email, $contact, $username, $pass, $user_type, $status)
     {
         $password = md5($pass); // password hashing
         if ($this->isUserExist($username, $email)) {
             // user exists
             return 0;
         } else {
-            $stmt = $this->con->prepare("INSERT INTO `users` (`id`, `fullname`, `username`, `email`, `password`, `user_type`, `department_id`, `status`, `attempts`) VALUES (NULL, ?, ?, ?, ?, ?, ?, 1, 0);");
-            $stmt->bind_param("ssssss", $fullname, $username, $email, $password, $usertype, $department);
+            $stmt = $this->con->prepare("INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `email`, `contact`, `password`, `user_type`, `status`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmt->bind_param("ssssssss", $first_name, $last_name, $username, $email, $contact, $password, $user_type, $status);
 
             if ($stmt->execute()) {
                 // user created
@@ -58,7 +58,7 @@ class DbOperations
     public function userLogin($username, $pass)
     {
         $password = md5($pass); // password decrypting
-        $stmt = $this->con->prepare("SELECT `id` FROM `users` WHERE `username` = ? AND `password` = ?");
+        $stmt = $this->con->prepare("SELECT `user_id` FROM `users` WHERE `username` = ? AND `password` = ?");
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();
         $stmt->store_result();
@@ -192,7 +192,7 @@ class DbOperations
     // checking if the user exists
     private function isUserExist($username, $email)
     {
-        $stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+        $stmt = $this->con->prepare("SELECT `user_id` FROM `users` WHERE `username` = ? OR `email` = ?");
         $stmt->bind_param("ss", $username, $email);
         $stmt->execute();
         $stmt->store_result();
