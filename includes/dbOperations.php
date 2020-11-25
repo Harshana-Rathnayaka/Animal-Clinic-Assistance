@@ -242,7 +242,7 @@ class DbOperations
     }
 
     // retrieving users table
-    public function getUsers()
+    public function getAllUsers()
     {
         $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `user_type` != 'ADMIN'");
         $stmt->execute();

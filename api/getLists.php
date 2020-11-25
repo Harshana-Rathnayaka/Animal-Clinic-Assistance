@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
     // db object
     $db = new DbOperations();
 
-    $users_admin = $db->getUsers();
+    $users_admin = $db->getAllUsers();
 }
 
 ?>
