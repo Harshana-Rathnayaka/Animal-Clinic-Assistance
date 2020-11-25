@@ -15,15 +15,15 @@
 
           <li class="nav-item">
               <a class="nav-link <?php if($currentPage =='pending-requests'){echo 'active';}?>" href="index.php">
-                <span data-feather="users"></span>
-               All Users
+                <span data-feather="user-plus"></span>
+              Pending Requests
               </a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link <?php if($currentPage =='all-users'){echo 'active';}?>" href="allusers.php">
-                <span data-feather="shopping-bag"></span>
-                Pending Requests
+                <span data-feather="users"></span>
+                All Users
               </a>
             </li>
 
