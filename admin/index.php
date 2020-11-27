@@ -145,18 +145,18 @@ while ($row = mysqli_fetch_array($pending_users_admin)):
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['contact']; ?></td>
                                                 <td class="badge badge-warning"><?php echo $row['status']; ?></td>
-                                                <td>
-                                                    <form action="../api/updateOrderStatus.php" method="POST">
+                                                <td class="text-left">
+                                                    <form action="../api/updateUserStatus.php" method="POST">
                                                         <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" >
                                                         <div class="form-group">
-                                                            <select class="form-control col-10" name="process" required>
-                                                                <option selected disabled>Update User</option>
+                                                            <select class="form-control col-10" name="status" required>
+                                                                <option selected disabled>Approve or Reject</option>
                                                                 <option value="ACTIVE">Approve</option>
-                                                                <option value="SUSPEND">Reject</option>
+                                                                <option value="SUSPENDED">Reject</option>
                                                             </select>
                                                         </div>
                                                         <br>
-                                                        <button type="submit" name="btnUpdateOrderStatus" class="btn btn-info">Update</button>
+                                                        <button type="submit" name="btnApproveUser" class="btn btn-primary">Update</button>
                                                     </form>
                                                 </td>
 

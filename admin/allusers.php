@@ -114,7 +114,7 @@ unset($_SESSION['missing']);
 
 
                         <div class="table-responsive">
-                            <table id="allUsersTable" class="table table-striped table-dark table-hover table-sm">
+                            <table id="allUsersTable" class="table text-center table-striped table-dark table-hover table-sm">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -169,18 +169,18 @@ endif;
 ?>
 
 
-                                                <td>
-                                                    <form action="../api/updateOrderStatus.php" method="POST">
+                                                <td class="text-left">
+                                                    <form action="../api/updateUserStatus.php" method="POST">
                                                         <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" >
                                                         <div class="form-group">
-                                                            <select class="form-control col-10" name="process" required>
+                                                            <select class="form-control col-10" name="status" required>
                                                                 <option selected disabled>Update User</option>
                                                                 <option value="ACTIVE">Activate</option>
-                                                                <option value="SUSPEND">Suspend</option>
+                                                                <option value="SUSPENDED">Suspend</option>
                                                             </select>
                                                         </div>
                                                         <br>
-                                                        <button type="submit" name="btnUpdateOrderStatus" class="btn btn-info">Update</button>
+                                                        <button type="submit" name="btnUpdateUserStatus" class="btn btn-primary">Update</button>
                                                     </form>
                                                 </td>
 

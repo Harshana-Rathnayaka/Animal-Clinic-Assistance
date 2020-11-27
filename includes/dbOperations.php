@@ -244,7 +244,7 @@ class DbOperations
     // retrieving users table
     public function getAllUsers()
     {
-        $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `user_type` != 'ADMIN'");
+        $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `user_type` != 'ADMIN' AND `status` != 'PENDING'");
         $stmt->execute();
         return $stmt->get_result();
     }
@@ -480,11 +480,11 @@ class DbOperations
         }
     }
 
-    // update user status (Activating and Suspending)
-    public function updateUserStatus($user_id, $user_status)
+    // update user status 
+    public function updateUserStatus($user_id, $status)
     {
-        $stmt = $this->con->prepare("UPDATE `users` SET `status` = ? WHERE `id` = ?");
-        $stmt->bind_param("ii", $user_status, $user_id);
+        $stmt = $this->con->prepare("UPDATE `users` SET `status` = ? WHERE `user_id` = ?");
+        $stmt->bind_param("si", $status, $user_id);
 
         if ($stmt->execute()) {
             // user status updated
