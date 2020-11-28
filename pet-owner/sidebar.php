@@ -28,7 +28,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if($currentPage =='home'){echo 'active';}?>" href="#">
+                        <a class="nav-link <?php if($currentPage =='home'){echo 'active';}?>" href="../clinic/index.php">
                             <span data-feather="home"></span>
                             Home
                         </a>
