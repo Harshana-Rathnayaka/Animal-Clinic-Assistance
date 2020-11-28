@@ -1,3 +1,22 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['username'])) {
+    $_SESSION['error'] = "Session timed out. Please login to continue.";
+    header('location:../login.php');
+} elseif (isset($_SESSION['user_type'])) {
+    $user_type = $_SESSION['user_type'];
+
+    if ($user_type == 'PET_OWNER') {
+        header('location:../pet-owner/index.php');
+    } else if ($user_type == 'ADMIN') {
+        header('location:../admin/index.php');
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,53 +66,30 @@
       <!-- Blog Entries Column -->
       <div class="col-md-12">
 
-        <h1 class="my-4">All Posts
-        </h1>
+        <h1 class="my-4">All Posts</h1>
+
+
+        <?php
+include '../api/getLists.php';
+while ($row = mysqli_fetch_array($all_questions)):
+?>
 
         <!-- Blog Post -->
         <div class="card mb-4">
           <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-              nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-              possimus, veniam magni quis!</p>
+            <h2 class="card-title"> <?php echo $row['title']; ?> </h2>
+            <p class="card-text text-justify"> <?php echo $row['description']; ?> </p>
             <a href="#" class="btn btn-primary">Read More &rarr;</a>
           </div>
           <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
+         Posted on <?php echo $row['timestamp']; ?> by
+            <a href="#"> <?php echo $row['first_name'] . ' ' . $row['last_name']; ?> </a>
           </div>
         </div>
 
-        <!-- Blog Post -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-              nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-              possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
-          </div>
-        </div>
-
-        <!-- Blog Post -->
-        <div class="card mb-4">
-          <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque,
-              nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-              possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
-          </div>
-        </div>
+        <?php
+endwhile;
+?>
 
         <!-- Pagination -->
         <ul class="pagination justify-content-center mb-4">
@@ -116,7 +112,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+      <p class="m-0 text-center text-white">2020 &copy; Dreeko Corporations | All Rights Reserved. <a title="https://github.com/Harshana-Rathnayaka/Animal-Clinic-Assistance" target="_blank" href="https://github.com/Harshana-Rathnayaka/Animal-Clinic-Assistance" class="icon-repo-forked"> Repository &rightarrowtail;</a></p>
     </div>
     <!-- /.container -->
   </footer>

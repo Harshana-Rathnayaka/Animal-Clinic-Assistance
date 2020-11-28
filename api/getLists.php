@@ -13,6 +13,7 @@ if (isset($_SESSION['user_id'])) {
     $all_users_admin = $db->getAllUsers();
     $pending_users_admin = $db->getPendingUsers();
     $my_questions = $db->getMyQuestions($user_id);
+    $all_questions = $db->getAllQuestions();
 }
 
 ?>

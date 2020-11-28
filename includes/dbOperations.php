@@ -234,9 +234,9 @@ class DbOperations
      */
 
     // retrieving departments table
-    public function getDepartments()
+    public function getAllQuestions()
     {
-        $stmt = $this->con->prepare("SELECT * FROM `departments`");
+        $stmt = $this->con->prepare("SELECT * FROM `questions` INNER JOIN `users` ON users.user_id = questions.user_id ");
         $stmt->execute();
         return $stmt->get_result();
     }
