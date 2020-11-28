@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Animal Clinic Assistance</a>
+      <a class="navbar-brand" href="index.php">Animal Clinic Assistance</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,8 +50,11 @@ if (!isset($_SESSION['username'])) {
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link btn btn-primary text-light" href="#">New Post
+            <a class="nav-link btn " href="#">New Post
             </a>
+          </li>
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../logout.php?logout">Sign out</a>
           </li>
         </ul>
       </div>
@@ -79,7 +82,7 @@ while ($row = mysqli_fetch_array($all_questions)):
           <div class="card-body">
             <h2 class="card-title"> <?php echo $row['title']; ?> </h2>
             <p class="card-text text-justify"> <?php echo $row['description']; ?> </p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
+            <a href="question-details.php?question_id=<?php echo $row['question_id']; ?>" class="btn btn-primary">Read More &rarr;</a>
           </div>
           <div class="card-footer text-muted">
          Posted on <?php echo $row['timestamp']; ?> by
