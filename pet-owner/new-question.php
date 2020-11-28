@@ -95,7 +95,7 @@ unset($_SESSION['missing']);
 ?>
 
             <div class="container">
-                <h3>New Question</h3>
+                <h4>New Question</h4>
                 <form action="../api/addNewQuestion.php" method="post">
                     <input hidden name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                     <div class="form-group">
