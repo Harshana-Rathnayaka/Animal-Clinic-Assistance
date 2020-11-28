@@ -275,6 +275,15 @@ class DbOperations
         return $stmt->get_result()->fetch_assoc();
     }
 
+        // retreiving comments per question
+        public function getCommentsPerQuestion($question_id)
+        {
+            $stmt = $this->con->prepare("SELECT * FROM `comments` INNER JOIN `users` ON users.user_id = comments.user_id WHERE `question_id` = ?");
+            $stmt->bind_param("i", $question_id);
+            $stmt->execute();
+            return $stmt->get_result();
+        }
+
     /*
     ======= TEAM LEADER ========
      */
