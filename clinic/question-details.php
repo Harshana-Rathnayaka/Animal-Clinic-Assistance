@@ -177,7 +177,9 @@ while ($row = mysqli_fetch_array($comments)):
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0"> <?php echo $row['first_name'] . ' ' . $row['last_name']; ?> </h5>
-            <?php echo $row['comment']; ?>
+            <p><?php echo $row['comment']; ?></p>
+            <small> at <?php echo $row['commented_at']; ?> </small>
+            <hr>
           </div>
         </div>
 
