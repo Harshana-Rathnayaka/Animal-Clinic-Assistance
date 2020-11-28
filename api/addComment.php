@@ -23,7 +23,7 @@ if (isset($_POST['question_id']) && isset($_POST['user_id']) && isset($_POST['co
         $_SESSION['success'] = "Comment added successfully!";
         $response['error'] = false;
         $response['message'] = "Comment added successfully!";
-        header("location:../clinic/question-details.php");
+        header("location:../clinic/index.php");
 
     } elseif ($result == 1) {
 
@@ -31,7 +31,7 @@ if (isset($_POST['question_id']) && isset($_POST['user_id']) && isset($_POST['co
         $_SESSION['error'] = "Something went wrong. Please try again later.";
         $response['error'] = true;
         $response['message'] = "Something went wrong. Please try again later.";
-        header("location:../clinic/question-details.php");
+        header("location:../clinic/index.php");
 
     }
 } else {
@@ -40,6 +40,6 @@ if (isset($_POST['question_id']) && isset($_POST['user_id']) && isset($_POST['co
     $_SESSION['missing'] = "Some fields are missing.";
     $response['error'] = true;
     $response['message'] = "Some fields are missing.";
-    header("location:../clinic/question-details.php");
+    header("location:../clinic/index.php");
 
 }
