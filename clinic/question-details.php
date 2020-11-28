@@ -149,7 +149,7 @@ unset($_SESSION['missing']);
           <div class="card-body">
             <form action="../api/addComment.php" method="POST">
 
-            <input type="hidden" name="user_id" value="<?php echo $result['user_id']; ?>">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="question_id" value="<?php echo $result['question_id']; ?>">
 
               <div class="form-group">
