@@ -34,6 +34,7 @@ if (!isset($_SESSION['username'])) {
 
   <!-- Custom styles for this template -->
   <link href="css/blog-post.css" rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -96,13 +97,62 @@ if (!isset($_SESSION['username'])) {
 
         <hr>
 
+
+        <?php
+if (@$_SESSION['success'] == true) {
+    $success = $_SESSION['success'];
+    ?>
+          <script>
+            swal({
+              title: "SUCCESS!",
+              text: "<?php echo $success; ?>",
+              icon: "success",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['success']);
+} elseif (@$_SESSION['error'] == true) {
+    $error = $_SESSION['error'];
+    ?>
+          <script>
+            swal({
+              title: "ERROR!",
+              text: "<?php echo $error; ?>",
+              icon: "warning",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['error']);
+} elseif (@$_SESSION['missing'] == true) {
+    $missing = $_SESSION['missing'];
+    ?>
+          <script>
+            swal({
+              title: "INFO!",
+              text: "<?php echo $missing; ?>",
+              icon: "info",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['missing']);
+}
+?>
+
+
         <!-- Comments Form -->
         <div class="card my-4">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
-            <form>
+            <form action="../api/addComment.php" method="POST">
+
+            <input type="hidden" name="user_id" value="<?php echo $result['user_id']; ?>">
+            <input type="hidden" name="question_id" value="<?php echo $result['question_id']; ?>">
+            
               <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea name="comment" placeholder="Start typing..." rows="4" required class="form-control"></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -118,31 +168,6 @@ if (!isset($_SESSION['username'])) {
           </div>
         </div>
 
-        <!-- Comment with nested comments -->
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
-            </div>
-
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
-            </div>
-
-          </div>
-        </div>
       </div>
 
     </div>

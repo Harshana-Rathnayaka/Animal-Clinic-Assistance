@@ -65,14 +65,14 @@ class DbOperations
         return $stmt->num_rows > 0;
     }
 
-    // updating OTP
-    public function updateUserOTP($user_id, $otp)
+    // adding comments
+    public function addComment($question_id, $user_id, $comment)
     {
-        $stmt = $this->con->prepare("UPDATE `users` SET `otp` = ? WHERE `id` = ?");
-        $stmt->bind_param("si", $otp, $user_id);
+        $stmt = $this->con->prepare("INSERT INTO `comments` (`comment_id`, `question_id`, `user_id`, `comment`) VALUES (NULL, ?, ?, ?);");
+        $stmt->bind_param("iis", $question_id, $user_id, $comment);
 
         if ($stmt->execute()) {
-            // otp updated
+            // comment added
             return 0;
         } else {
             // some error
