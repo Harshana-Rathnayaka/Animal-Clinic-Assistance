@@ -104,14 +104,14 @@ class DbOperations
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // deleting login attempts
-    public function deleteLoginAttempts($ip_address)
+    // deleting questions
+    public function deleteQuestion($question_id)
     {
-        $stmt = $this->con->prepare("DELETE FROM `login_attempts` WHERE `ip_address` = ?");
-        $stmt->bind_param("s", $ip_address);
+        $stmt = $this->con->prepare("DELETE FROM `questions` WHERE `question_id` = ?");
+        $stmt->bind_param("i", $question_id);
 
         if ($stmt->execute()) {
-            // login attempt deleted
+            // question deleted
             return 0;
         } else {
             // some error

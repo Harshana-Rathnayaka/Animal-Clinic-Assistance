@@ -118,7 +118,9 @@ while ($row = mysqli_fetch_array($my_questions)):
                   <td class="text-justify"> <?php echo $row['description']; ?> </td>
 
                   <td>
-                    <form method="POST">
+                    <form method="POST" action="../api/deleteQuestion.php">
+
+                      <input name="question_id" hidden value=" <?php echo $row['question_id']; ?> ">
                       <button type="submit" name="btnViewQuestion" class="btn btn-sm btn-info">View</button>
 
                     <br>
