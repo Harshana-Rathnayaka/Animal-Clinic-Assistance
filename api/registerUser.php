@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $response['error'] = false;
                 $response['message'] = "User registered successfully";
-                $_SESSION['success'] = "You have succesfully. Please log in.";
+                $_SESSION['success'] = "You have succesfully registered. Please log in.";
 
             }
 
