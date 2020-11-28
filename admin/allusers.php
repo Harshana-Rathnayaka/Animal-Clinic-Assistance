@@ -196,7 +196,7 @@ endwhile;
                     </main>
 
                     <div class="ml-auto mr-auto text-center py-5 mt-5">
-                    <?php include 'footer.php';?>
+                    <?php include '../footer.php';?>
                     </div>
 
                 </div>
