@@ -121,7 +121,9 @@ while ($row = mysqli_fetch_array($my_questions)):
                     <form method="POST" action="../api/deleteQuestion.php">
 
                       <input name="question_id" hidden value=" <?php echo $row['question_id']; ?> ">
-                      <button type="submit" name="btnViewQuestion" class="btn btn-sm btn-info">View</button>
+                      <a href="../clinic/question-details.php?question_id=<?php echo $row['question_id']; ?>">
+                        <button type="button" name="btnViewQuestion" class="btn btn-sm btn-info">View</button>
+                      </a>
                       <button type="submit" name="btnDeleteQuestion" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                   </td>

@@ -7,9 +7,7 @@ if (!isset($_SESSION['username'])) {
 } elseif (isset($_SESSION['user_type'])) {
     $user_type = $_SESSION['user_type'];
 
-    if ($user_type == 'PET_OWNER') {
-        header('location:../pet-owner/index.php');
-    } else if ($user_type == 'ADMIN') {
+    if ($user_type == 'ADMIN') {
         header('location:../admin/index.php');
     }
 }
