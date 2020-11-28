@@ -48,10 +48,20 @@ if (!isset($_SESSION['username'])) {
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+        <?php
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'PET_OWNER'):
+?>
           <li class="nav-item">
-            <a class="nav-link btn " href="#">New Post
+            <a class="nav-link btn " href="../pet-owner/new-question.php">New Question
             </a>
           </li>
+          <?php
+else:
+?>
+            <div> </div>
+            <?php
+endif;
+?>
           <li class="nav-item text-nowrap">
             <a class="nav-link" href="../logout.php?logout">Sign out</a>
           </li>
