@@ -28,13 +28,6 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if($currentPage =='settings'){echo 'active';}?>" href="settings.php">
-                            <span data-feather="settings"></span>
-                            Account Settings
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a class="nav-link <?php if($currentPage =='home'){echo 'active';}?>" href="#">
                             <span data-feather="home"></span>
                             Home
