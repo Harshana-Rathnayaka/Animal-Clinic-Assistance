@@ -1,3 +1,22 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['username'])) {
+    $_SESSION['error'] = "Session timed out. Please login to continue.";
+    header('location:../login.php');
+} elseif (isset($_SESSION['user_type'])) {
+    $user_type = $_SESSION['user_type'];
+
+    if ($user_type == 'PET_OWNER') {
+        header('location:../pet-owner/index.php');
+    } else if ($user_type == 'ADMIN') {
+        header('location:../admin/index.php');
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +42,7 @@
    <!-- Navigation -->
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Animal Clinic Assistance</a>
+      <a class="navbar-brand" href="index.php">Animal Clinic Assistance</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,8 +50,11 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link btn btn-primary text-light" href="#">New Post
+            <a class="nav-link btn " href="#">New Post
             </a>
+          </li>
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../logout.php?logout">Sign out</a>
           </li>
         </ul>
       </div>
@@ -47,31 +69,30 @@
       <!-- Post Content Column -->
       <div class="col-lg-12">
 
+      <?php
+      require_once '../includes/dbOperations.php';
+      $question_id = $_REQUEST['question_id'];
+      $db = new DbOperations();
+      $result = $db->getSingleQuestion($question_id);
+      ?>
+
         <!-- Title -->
-        <h1 class="mt-5 pt-5">Post Title</h1>
+        <h1 class="mt-5 pt-5"> <?php echo $result['title']; ?> </h1>
 
         <!-- Author -->
         <p class="lead">
           by
-          <a href="#">Start Bootstrap</a>
+          <a href="#"> <?php echo $result['first_name'] . ' ' . $result['last_name']; ?> </a>
         </p>
 
         <hr>
 
         <!-- Date/Time -->
-        <p>Posted on January 1, 2019 at 12:00 PM</p>
+        <p>Posted on <?php echo $result['timestamp']; ?></p>
         <hr>
 
         <!-- Post Content -->
-        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+        <p class="lead text-justify"> <?php echo $result['description']; ?> </p>
 
         <hr>
 
@@ -122,7 +143,6 @@
 
           </div>
         </div>
-
       </div>
 
     </div>
@@ -134,7 +154,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    <p class="m-0 text-center text-white">2020 &copy; Dreeko Corporations | All Rights Reserved. <a title="https://github.com/Harshana-Rathnayaka/Animal-Clinic-Assistance" target="_blank" href="https://github.com/Harshana-Rathnayaka/Animal-Clinic-Assistance" class="icon-repo-forked"> Repository &rightarrowtail;</a></p>
     </div>
     <!-- /.container -->
   </footer>
