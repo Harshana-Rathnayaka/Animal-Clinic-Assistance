@@ -257,10 +257,11 @@ class DbOperations
         return $stmt->get_result();
     }
 
-    // retrieving login log table
-    public function getLoginLog()
+    // retrieving questions by user
+    public function getMyQuestions($user_id)
     {
-        $stmt = $this->con->prepare("SELECT * FROM `login_log` INNER JOIN users ON users.id = login_log.user_id");
+        $stmt = $this->con->prepare("SELECT * FROM `questions` WHERE `user_id` = ?");
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         return $stmt->get_result();
     }
