@@ -38,14 +38,14 @@ class DbOperations
         }
     }
 
-    // addding new email
-    public function createEmail($name, $email)
+    // addding new question
+    public function createPost($user_id, $title, $description)
     {
-        $stmt = $this->con->prepare("INSERT INTO `senior_managers`(`senior_manager_id`, `senior_manager_name`, `senior_manager_email`) VALUES (NULL, ?, ?);");
-        $stmt->bind_param("ss", $name, $email);
+        $stmt = $this->con->prepare("INSERT INTO `questions` (`question_id`, `user_id`, `title`, `description`) VALUES (NULL, ?, ?, ?);");
+        $stmt->bind_param("iss", $user_id, $title, $description);
 
         if ($stmt->execute()) {
-            // email created
+            // question created
             return 0;
         } else {
             // some error
