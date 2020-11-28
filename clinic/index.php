@@ -34,6 +34,7 @@ if (!isset($_SESSION['username'])) {
 
   <!-- Custom styles for this template -->
   <link href="css/blog-home.css" rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -60,6 +61,51 @@ if (!isset($_SESSION['username'])) {
       </div>
     </div>
   </nav>
+
+
+  <?php
+if (@$_SESSION['success'] == true) {
+    $success = $_SESSION['success'];
+    ?>
+          <script>
+            swal({
+              title: "SUCCESS!",
+              text: "<?php echo $success; ?>",
+              icon: "success",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['success']);
+} elseif (@$_SESSION['error'] == true) {
+    $error = $_SESSION['error'];
+    ?>
+          <script>
+            swal({
+              title: "ERROR!",
+              text: "<?php echo $error; ?>",
+              icon: "warning",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['error']);
+} elseif (@$_SESSION['missing'] == true) {
+    $missing = $_SESSION['missing'];
+    ?>
+          <script>
+            swal({
+              title: "INFO!",
+              text: "<?php echo $missing; ?>",
+              icon: "info",
+              button: "OK",
+            });
+          </script>
+        <?php
+unset($_SESSION['missing']);
+}
+?>
+
 
   <!-- Page Content -->
   <div class="container">
