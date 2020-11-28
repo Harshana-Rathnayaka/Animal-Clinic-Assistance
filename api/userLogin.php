@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     header("location:../admin/index.php");
 
+                    // animal clinic account
                 } elseif ($user['user_type'] == 'CLINIC') {
 
                     // session and reroute
